@@ -55,4 +55,26 @@ class BatEventType extends ConfigEntityBundleBase implements BatEventTypeInterfa
    */
   protected $label;
 
+  /**
+   * {@inheritdoc}
+   */
+  public function save() {
+    if ($this->isNew()) {
+
+      // Create all tables required by the BAT library for this Event Type.
+      bat_event_create_event_type_schema($this->id);
+
+      /** TODO
+      if (isset($entity->fixed_event_states)) {
+        if ($entity->fixed_event_states) {
+          // Create a field of type 'Bat Event State Reference' to reference an Event State.
+          bat_event_type_add_event_state_reference($entity);
+        }
+      }
+      */
+    }
+
+    parent::save();
+  }
+
 }
