@@ -77,4 +77,19 @@ class BatEventType extends ConfigEntityBundleBase implements BatEventTypeInterfa
     parent::save();
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function delete() {
+
+    // Delete all tables necessary for this Event Type.
+    bat_event_delete_event_type_schema($this->id);
+
+    // Delete the states associated with this Event Type.
+    // TODO
+    // bat_event_delete_states_by_type($this->id);
+
+    parent::delete();
+  }
+
 }

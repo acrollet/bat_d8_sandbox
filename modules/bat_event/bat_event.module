@@ -58,14 +58,14 @@ function bat_event_theme_suggestions_bat_event(array $variables) {
 }
 
 /**
- * Create 6 tables for store events of type $machine_name.
+ * Create 6 tables for store events of type $id.
  *
- * @param $machine_name
+ * @param $id
  */
-function bat_event_create_event_type_schema($machine_name) {
+function bat_event_create_event_type_schema($id) {
   $schema = array();
 
-  $schema['bat_event_' . $machine_name . '_day_state'] = array(
+  $schema['bat_event_' . $id . '_day_state'] = array(
     'description' => 'Holds the state of each unit for a given day',
     'fields' => bat_event_generate_day_schema_fields(),
     'indexes' => array(
@@ -84,7 +84,7 @@ function bat_event_create_event_type_schema($machine_name) {
     ),
   );
 
-  $schema['bat_event_' . $machine_name . '_day_event'] = array(
+  $schema['bat_event_' . $id . '_day_event'] = array(
     'description' => 'Holds the event that determined the state of a unit',
     'fields' => bat_event_generate_day_schema_fields(),
     'indexes' => array(
@@ -103,7 +103,7 @@ function bat_event_create_event_type_schema($machine_name) {
     ),
   );
 
-  $schema['bat_event_' . $machine_name . '_hour_state'] = array(
+  $schema['bat_event_' . $id . '_hour_state'] = array(
     'description' => 'Holds the state of the unit',
     'fields' => bat_event_generate_hour_schema_fields(),
     'indexes' => array(
@@ -122,7 +122,7 @@ function bat_event_create_event_type_schema($machine_name) {
     ),
   );
 
-  $schema['bat_event_' . $machine_name . '_hour_event'] = array(
+  $schema['bat_event_' . $id . '_hour_event'] = array(
     'description' => 'Holds the event that determined the state of a unit',
     'fields' => bat_event_generate_hour_schema_fields(),
     'indexes' => array(
@@ -141,7 +141,7 @@ function bat_event_create_event_type_schema($machine_name) {
     ),
   );
 
-  $schema['bat_event_' . $machine_name . '_minute_state'] = array(
+  $schema['bat_event_' . $id . '_minute_state'] = array(
     'description' => 'Holds the state of the unit',
     'fields' => bat_event_generate_minute_schema_fields(),
     'indexes' => array(
@@ -160,7 +160,7 @@ function bat_event_create_event_type_schema($machine_name) {
     ),
   );
 
-  $schema['bat_event_' . $machine_name . '_minute_event'] = array(
+  $schema['bat_event_' . $id . '_minute_event'] = array(
     'description' => 'Holds the event that determined the state of a unit',
     'fields' => bat_event_generate_minute_schema_fields(),
     'indexes' => array(
@@ -321,4 +321,30 @@ function bat_event_generate_minute_schema_fields() {
   }
 
   return $fields;
+}
+
+/**
+ * Utility function to return the table names
+ * required to start an event using BAT conventions.
+ *
+ * @param $id
+ */
+function bat_event_get_event_type_tables($id) {
+  return array('bat_event_' . $id . '_day_state',
+               'bat_event_' . $id . '_day_event',
+               'bat_event_' . $id . '_hour_state',
+               'bat_event_' . $id . '_hour_event',
+               'bat_event_' . $id . '_minute_state',
+               'bat_event_' . $id . '_minute_event');
+}
+
+/**
+ * Given an event type id, drop all the tables that store event data for that event.
+ *
+ * @param $id
+ */
+function bat_event_delete_event_type_schema($id) {
+  foreach (bat_event_get_event_type_tables($id) as $name) {
+    db_drop_table($name);
+  }
 }
