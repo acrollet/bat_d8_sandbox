@@ -77,6 +77,20 @@ class EventStateForm extends EntityForm {
    */
   public function save(array $form, FormStateInterface $form_state) {
     $event_state = $this->entity;
+
+    // Create the bat identifier.
+    if ($event_state->isNew()) {
+      // Get next available serial number.
+      $query = \Drupal::entityQuery('event_state');
+      $result = $query->execute();
+      $serials = array();
+      foreach ($result as $key => $record) {
+        $state = entity_load('event_state', $key);
+        $serials[] = $state->get('serial');
+      }
+      $event_state->serial = max($serials) + 1;
+    }
+
     $status = $event_state->save();
 
     switch ($status) {

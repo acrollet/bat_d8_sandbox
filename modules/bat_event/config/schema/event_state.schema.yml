@@ -5,6 +5,9 @@ bat_event.event_state.*:
     id:
       type: string
       label: 'ID'
+    serial:
+      type: integer
+      label: 'Serial'
     label:
       type: label
       label: 'Label'
