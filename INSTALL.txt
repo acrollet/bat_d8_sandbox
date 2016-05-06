@@ -1,0 +1,13 @@
+To install bat:
+
+* Download the BAT module
+* Download composer_manager (if not already present)
+  * If you are not already using composer_manager, run the following command in the root of your site:
+
+php modules/composer_manager/scripts/init.php
+
+* In the root of your site, run:
+
+composer drupal-update
+
+* Enable the bat module
