@@ -1,0 +1,6 @@
+# Bat menu items definition
+bat.admin:
+  title: 'Bat'
+  route_name: bat.admin
+  description: 'Administer Bat'
+  parent: system.admin

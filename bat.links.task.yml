@@ -1,0 +1,4 @@
+# Bat routing definition
+bat.admin:
+  route_name: bat.admin
+  title: 'Bat Admistration'

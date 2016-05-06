@@ -1,0 +1,8 @@
+# Bat overview page
+bat.admin:
+  path: '/admin/bat'
+  defaults:
+    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
+    _title: 'Bat'
+  requirements:
+    _permission: 'access administration pages'
