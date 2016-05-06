@@ -1,0 +1,7 @@
+name: BAT - Booking and Availability Management Tools
+type: module
+description: A generic booking framework for building booking applications
+core: 8.x
+package: BAT
+dependencies:
+  - datetime
