@@ -56,6 +56,13 @@ class BatEventType extends ConfigEntityBundleBase implements BatEventTypeInterfa
   protected $label;
 
   /**
+   * The default event state ID.
+   *
+   * @var string
+   */
+  protected $defaultState;
+
+  /**
    * {@inheritdoc}
    */
   public function save() {

@@ -37,7 +37,13 @@ class BatEventTypeForm extends EntityForm {
       '#disabled' => !$bat_event_type->isNew(),
     );
 
-    /* You will need additional form elements for your custom properties. */
+    $form['defaultState'] = array(
+      '#title' => $this->t('Default State'),
+      '#type' => 'textfield',
+      '#description' => $this->t("The ID of the default State for this Event Type"),
+      '#default_value' => $bat_event_type->get('defaultState'),
+      '#required' => TRUE,
+    );
 
     return $form;
   }

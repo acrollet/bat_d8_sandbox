@@ -10,3 +10,5 @@ bat_event.bat_event_type.*:
       label: 'Label'
     uuid:
       type: string
+    defaultState:
+      type: string
