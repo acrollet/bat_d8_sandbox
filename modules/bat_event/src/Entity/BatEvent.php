@@ -273,6 +273,32 @@ class BatEvent extends ContentEntityBase implements BatEventInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
+    $fields['unit_id'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Unit'))
+      ->setDescription(t('The BAT unit ID for this event.'))
+      ->setRequired(true)
+      ->setRevisionable(TRUE)
+      ->setSetting('target_type', 'bat_unit')
+      ->setSetting('handler', 'default')
+      ->setTranslatable(TRUE)
+      ->setDisplayOptions('view', array(
+        'label' => 'above',
+        'type' => 'string',
+        'weight' => 0,
+      ))
+      ->setDisplayOptions('form', array(
+        'type' => 'entity_reference_autocomplete',
+        'weight' => 0,
+        'settings' => array(
+          'match_operator' => 'CONTAINS',
+          'size' => '60',
+          'autocomplete_type' => 'tags',
+          'placeholder' => '',
+        ),
+      ))
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
     return $fields;
   }
 
