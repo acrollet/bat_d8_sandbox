@@ -4,3 +4,9 @@ bat.admin:
   route_name: bat.admin
   description: 'Administer Bat'
   parent: system.admin
+
+bat.admin.config:
+  title: 'Configuration'
+  route_name: bat.admin.config
+  description: 'Configure settings and business rules for BAT management'
+  parent: bat.admin

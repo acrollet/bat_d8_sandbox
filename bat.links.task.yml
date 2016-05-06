@@ -2,3 +2,7 @@
 bat.admin:
   route_name: bat.admin
   title: 'Bat Admistration'
+
+bat.admin.config:
+  route_name: bat.admin.config
+  title: 'Configuration'

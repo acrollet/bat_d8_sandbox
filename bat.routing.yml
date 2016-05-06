@@ -6,3 +6,12 @@ bat.admin:
     _title: 'Bat'
   requirements:
     _permission: 'access administration pages'
+
+# Bat configuration overview page
+bat.admin.config:
+  path: '/admin/bat/config'
+  defaults:
+    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
+    _title: 'Configuration'
+  requirements:
+    _permission: 'access administration pages'
