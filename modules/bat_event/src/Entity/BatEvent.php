@@ -199,7 +199,7 @@ class BatEvent extends ContentEntityBase implements BatEventInterface {
 
     $fields['name'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Name'))
-      ->setDescription(t('The name of the Events entity.'))
+      ->setDescription(t('The name of the Event.'))
       ->setSettings(array(
         'max_length' => 50,
         'text_processing' => 0,
@@ -219,12 +219,12 @@ class BatEvent extends ContentEntityBase implements BatEventInterface {
 
     $fields['status'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Publishing status'))
-      ->setDescription(t('A boolean indicating whether the Events is published.'))
+      ->setDescription(t('A boolean indicating whether the Event is published.'))
       ->setDefaultValue(TRUE);
 
     $fields['langcode'] = BaseFieldDefinition::create('language')
       ->setLabel(t('Language code'))
-      ->setDescription(t('The language code for the Events entity.'))
+      ->setDescription(t('The language code for the Event entity.'))
       ->setDisplayOptions('form', array(
         'type' => 'language_select',
         'weight' => 10,
@@ -238,6 +238,40 @@ class BatEvent extends ContentEntityBase implements BatEventInterface {
     $fields['changed'] = BaseFieldDefinition::create('changed')
       ->setLabel(t('Changed'))
       ->setDescription(t('The time that the entity was last edited.'));
+
+    $fields['start_date'] = BaseFieldDefinition::create('datetime')
+      ->setLabel(t('Start Date'))
+      ->setDescription(t('The start date for the event.'))
+      ->setRequired(true)
+      ->setSetting('datetime_type', 'date')
+      ->setDisplayOptions('view', array(
+        'label' => 'above',
+        'type' => 'string',
+        'weight' => -4,
+      ))
+      ->setDisplayOptions('form', array(
+        'type' => 'date',
+        'weight' => -4,
+      ))
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['end_date'] = BaseFieldDefinition::create('datetime')
+      ->setLabel(t('End Date'))
+      ->setDescription(t('The end date for the event.'))
+      ->setRequired(true)
+      ->setSetting('datetime_type', 'date')
+      ->setDisplayOptions('view', array(
+        'label' => 'above',
+        'type' => 'string',
+        'weight' => -4,
+      ))
+      ->setDisplayOptions('form', array(
+        'type' => 'date',
+        'weight' => -4,
+      ))
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
 
     return $fields;
   }
