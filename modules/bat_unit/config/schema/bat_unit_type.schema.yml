@@ -1,0 +1,12 @@
+bat_unit.bat_unit_type.*:
+  type: config_entity
+  label: 'Unit type config'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    uuid:
+      type: string

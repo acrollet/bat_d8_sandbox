@@ -1,0 +1,17 @@
+# Unit routing definition
+entity.bat_unit.canonical:
+  route_name: entity.bat_unit.canonical
+  base_route: entity.bat_unit.canonical
+  title: 'View'
+
+entity.bat_unit.edit_form:
+  route_name: entity.bat_unit.edit_form
+  base_route: entity.bat_unit.canonical
+  title: Edit
+
+entity.bat_unit.delete_form:
+  route_name:  entity.bat_unit.delete_form
+  base_route:  entity.bat_unit.canonical
+  title: Delete
+  weight: 10
+

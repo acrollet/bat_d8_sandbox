@@ -1,0 +1,19 @@
+add unit entities:
+  title: 'Create new Unit entities'
+
+administer unit entities:
+  title: 'Administer Unit entities'
+  description: 'Allow to access the administration form to configure Unit entities.'
+  restrict access: true
+
+delete unit entities:
+  title: 'Delete Unit entities'
+
+edit unit entities:
+  title: 'Edit Unit entities'
+
+view published unit entities:
+  title: 'View published Unit entities'
+
+view unpublished unit entities:
+  title: 'View unpublished Unit entities'

@@ -1,0 +1,11 @@
+entity.bat_unit.add_form:
+  route_name: 'bat_unit.add_page'
+  title: 'Add Unit'
+  appears_on:
+    - entity.bat_unit.collection
+entity.bat_unit_type.add_form:
+  route_name: 'entity.bat_unit_type.add_form'
+  title: 'Add Unit type'
+  appears_on:
+    - entity.bat_unit_type.collection
+

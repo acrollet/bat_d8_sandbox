@@ -1,0 +1,16 @@
+# Unit menu items definition
+entity.bat_unit.collection:
+  title: 'Unit list'
+  route_name: entity.bat_unit.collection
+  description: 'List Unit entities'
+  parent: bat.admin.config
+  weight: 100
+
+# Unit type menu items definition
+entity.bat_unit_type.collection:
+  title: 'Unit type'
+  route_name: entity.bat_unit_type.collection
+  description: 'List Unit type (bundles)'
+  parent: bat.admin.config
+  weight: 99
+
