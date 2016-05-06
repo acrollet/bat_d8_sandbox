@@ -346,11 +346,13 @@ class BatEvent extends ContentEntityBase implements BatEventInterface {
     // TODO: abstract to other types of entities.
     $target_entity_id = $entity->get('unit_id')->target_id;
 
-    // Get event state.
+    // Get event state for this event.
     $event_state = entity_load('event_state', $entity->get('state_id')->target_id);
 
-    // FIXME: get default event state, once there is one.
-    $unit = new Unit($target_entity_id, 1);
+    // Get default state ID for this event type.
+    $default_state = entity_load('event_state', $event_type->get('defaultState'));
+
+    $unit = new Unit($target_entity_id, $default_state->serial);
 
     $this->batStoreSave($unit,
       new \DateTime($entity->get('start_date')->value),
@@ -361,7 +363,6 @@ class BatEvent extends ContentEntityBase implements BatEventInterface {
       $event_state->serial,
       $entity->id
     );
-
   }
 
   /**
