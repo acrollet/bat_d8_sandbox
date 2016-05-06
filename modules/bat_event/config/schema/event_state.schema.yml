@@ -1,0 +1,24 @@
+bat_event.event_state.*:
+  type: config_entity
+  label: 'Event state config'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    uuid:
+      type: string
+    eventTypeId:
+      type: string
+      label: 'Event Type'
+    color:
+      type: string
+      label: 'Color'
+    calendarLabel:
+      type: string
+      label: 'Calendar Label'
+    blocking:
+      type: boolean
+      label: 'Blocking'

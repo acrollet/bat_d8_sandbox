@@ -12,3 +12,11 @@ entity.bat_event_type.collection:
   route_name: entity.bat_event_type.collection
   description: 'List Event types'
   parent: entity.bat_event.collection
+
+# Event state menu items definition
+entity.event_state.collection:
+  title: 'Event state'
+  route_name: entity.event_state.collection
+  description: 'List Event state (bundles)'
+  parent: bat.admin.config
+  weight: 99
