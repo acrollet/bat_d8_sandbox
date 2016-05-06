@@ -1,0 +1,14 @@
+# Events menu items definition
+entity.bat_event.collection:
+  title: 'Events'
+  route_name: entity.bat_event.collection
+  description: 'A list of all events'
+  parent: bat.admin
+  weight: -10
+
+# Event types menu definition
+entity.bat_event_type.collection:
+  title: 'Event types'
+  route_name: entity.bat_event_type.collection
+  description: 'List Event types'
+  parent: entity.bat_event.collection

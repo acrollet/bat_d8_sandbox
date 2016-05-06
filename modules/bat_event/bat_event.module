@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * @file
+ * Contains bat_event.module..
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function bat_event_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the bat_event module.
+    case 'help.page.bat_event':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Create and administer events for BAT') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function bat_event_theme() {
+  $theme = [];
+  $theme['bat_event'] = [
+    'render element' => 'elements',
+    'file' => 'bat_event.page.inc',
+    'template' => 'bat_event',
+  ];
+  $theme['bat_event_content_add_list'] = [
+    'render element' => 'content',
+    'variables' => ['content' => NULL],
+    'file' => 'bat_event.page.inc',
+  ];
+  return $theme;
+}
+
+/**
+* Implements hook_theme_suggestions_HOOK().
+*/
+function bat_event_theme_suggestions_bat_event(array $variables) {
+  $suggestions = array();
+  $entity = $variables['elements']['#bat_event'];
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+
+  $suggestions[] = 'bat_event__' . $sanitized_view_mode;
+  $suggestions[] = 'bat_event__' . $entity->bundle();
+  $suggestions[] = 'bat_event__' . $entity->bundle() . '__' . $sanitized_view_mode;
+  $suggestions[] = 'bat_event__' . $entity->id();
+  $suggestions[] = 'bat_event__' . $entity->id() . '__' . $sanitized_view_mode;
+  return $suggestions;
+}

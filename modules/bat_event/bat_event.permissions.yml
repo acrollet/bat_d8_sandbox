@@ -1,0 +1,19 @@
+add events entities:
+  title: 'Create new Events entities'
+
+administer events entities:
+  title: 'Administer Events entities'
+  description: 'Allow to access the administration form to configure Events entities.'
+  restrict access: true
+
+delete events entities:
+  title: 'Delete Events entities'
+
+edit events entities:
+  title: 'Edit Events entities'
+
+view published events entities:
+  title: 'View published Events entities'
+
+view unpublished events entities:
+  title: 'View unpublished Events entities'
