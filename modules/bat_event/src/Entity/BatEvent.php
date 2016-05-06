@@ -10,6 +10,12 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\bat_event\BatEventInterface;
 use Drupal\user\UserInterface;
 
+use Drupal\Core\Database\Database;
+use Roomify\Bat\Event\Event;
+use Roomify\Bat\Calendar\Calendar;
+use Roomify\Bat\Store\DrupalDBStore;
+use Roomify\Bat\Unit\Unit;
+
 /**
  * Defines the Events entity.
  *
@@ -299,7 +305,98 @@ class BatEvent extends ContentEntityBase implements BatEventInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
+    $fields['state_id'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('State'))
+      ->setDescription(t('The Event State ID for this event.'))
+      ->setRequired(true)
+      ->setRevisionable(TRUE)
+      ->setSetting('target_type', 'event_state')
+      ->setSetting('handler', 'default')
+      ->setTranslatable(TRUE)
+      ->setDisplayOptions('view', array(
+        'label' => 'above',
+        'type' => 'string',
+        'weight' => 0,
+      ))
+      ->setDisplayOptions('form', array(
+        'type' => 'entity_reference_autocomplete',
+        'weight' => 0,
+        'settings' => array(
+          'match_operator' => 'CONTAINS',
+          'size' => '60',
+          'autocomplete_type' => 'tags',
+          'placeholder' => '',
+        ),
+      ))
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
     return $fields;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function save() {
+    $entity = $this;
+    $event_type = entity_load('bat_event_type', $entity->get('type')->target_id);
+
+    parent::save();
+
+    // TODO: abstract to other types of entities.
+    $target_entity_id = $entity->get('unit_id')->target_id;
+
+    // Get event state.
+    $event_state = entity_load('event_state', $entity->get('state_id')->target_id);
+
+    // FIXME: get default event state, once there is one.
+    $unit = new Unit($target_entity_id, 1);
+
+    $this->batStoreSave($unit,
+      new \DateTime($entity->get('start_date')->value),
+      new \DateTime($entity->get('end_date')->value),
+      $event_type->get('id'),
+      // $event_type->event_granularity,
+      'daily',
+      $event_state->serial,
+      $entity->id
+    );
+
+  }
+
+  /**
+   * Handles saving to the BatStore
+   *
+   * @param \Roomify\Bat\Unit\Unit $unit - The unit to save
+   * @param \DateTime $start_date
+   * @param \DateTime $end_date
+   * @param $event_type
+   * @param $granularity
+   * @param $event_state
+   * @param $event_id
+   * @param bool|FALSE $remove - set to TRUE if the event is to be removed (event_id set to zero)
+   */
+  public function batStoreSave(Unit $unit, \DateTime $start_date, \DateTime $end_date, $event_type, $granularity, $event_state, $event_id, $remove = FALSE ) {
+    $default_db = Database::getConnectionInfo('default');
+    $prefix = (!empty($default_db['default']['prefix']['default'])) ? $default_db['default']['prefix']['default'] : '';
+
+    $state_store = new DrupalDBStore($event_type, DrupalDBStore::BAT_STATE, $prefix);
+    $event_store = new DrupalDBStore($event_type, DrupalDBStore::BAT_EVENT, $prefix);
+
+    $units = array($unit);
+    $state_calendar = new Calendar($units, $state_store);
+    $event_calendar = new Calendar($units, $event_store);
+
+    $state_event = new Event($start_date, $end_date, $unit, $event_state);
+    if (!$remove) {
+      $event_id_event = new Event($start_date, $end_date, $unit, $event_id);
+    }
+    else {
+      $event_id_event = new Event($start_date, $end_date, $unit, 0);
+    }
+
+    $state_calendar->addEvents(array($state_event), $granularity);
+    $event_calendar->addEvents(array($event_id_event), $granularity);
   }
 
 }
